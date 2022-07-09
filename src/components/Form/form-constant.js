@@ -3,5 +3,8 @@ export const formConstant={
     Title:"Title",
     Message:"Message",
     Tags:"Tags" ,
-    createMemory:"createMemory"
+    createMemory:"createMemory",
+    submit:"submit",
+    update:"update",
+    clear:"clear"
 }

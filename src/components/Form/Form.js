@@ -15,7 +15,8 @@ import {
 } from "../../store/actions/post-actions";
 import { formConstant } from "./form-constant";
 import { useSelector } from "react-redux";
-import ReadonlyLabel from "../input-fields/ReadonlyLabel";
+import { useTranslation } from "react-i18next";
+
 
 const Form = ({
   resetFormState,
@@ -30,6 +31,7 @@ const Form = ({
   const classes = useStyles();
   const [isDisable, setDisable] = useState(true);
   const { postId } = useSelector((state) => state.form);
+  const {t} = useTranslation(['common'])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,11 +89,11 @@ const Form = ({
         onSubmit={handleSubmit}
         className={`${classes.root} ${classes.form}`}
       >
-        <ReadonlyLabel variant="h6" label={formConstant.createMemory} />
-        //<Typography variant="h6">{postId ? "Editing a Memory" :"Creating a Memory"}</Typography>
+        {/* //<ReadonlyLabel variant="h6" label={formConstant.createMemory} /> */}
+      <Typography variant="h6">{t(formConstant.createMemory)}</Typography>
         <TextField
           name={formConstant.Creator}
-          label={formConstant.Creator}
+          label={t(formConstant.Creator)}
           variant="outlined"
           fullWidth
           value={formData.Creator}
@@ -99,7 +101,7 @@ const Form = ({
         />
         <TextField
           name={formConstant.Title}
-          label={formConstant.Title}
+          label={t(formConstant.Title)}
           variant="outlined"
           fullWidth
           value={formData.Title}
@@ -107,7 +109,7 @@ const Form = ({
         />
         <TextField
           name={formConstant.Message}
-          label={formConstant.Message}
+          label={t(formConstant.Message)}
           variant="outlined"
           fullWidth
           value={formData.Message}
@@ -115,7 +117,7 @@ const Form = ({
         />
         <TextField
           name={formConstant.Tags}
-          label={formConstant.Tags}
+          label={t(formConstant.Tags)}
           variant="outlined"
           fullWidth
           value={formData.Tags}
@@ -139,7 +141,7 @@ const Form = ({
           fullWidth
           disabled={isDisable}
         >
-          {postId ? "Update" : "Submit"}
+          {postId ? t(formConstant.update) : t(formConstant.submit)}
         </Button>
         <Button
           variant="contained"
@@ -148,7 +150,7 @@ const Form = ({
           fullWidth
           onClick={handleClear}
         >
-          Clear
+          {t(formConstant.clear)}
         </Button>
       </form>
     </Paper>

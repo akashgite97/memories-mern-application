@@ -12,6 +12,16 @@ export default makeStyles(() => ({
   heading: {
     color: 'rgba(0,183,255, 1)',
   },
+  headerLeft:{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: "28px"
+  },
+  headerRight:{
+    position: "absolute",
+    right: "3%",
+},
   image: {
     marginLeft: '15px',
   },

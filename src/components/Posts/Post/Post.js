@@ -16,11 +16,12 @@ import moment from 'moment'
 import { useDispatch } from "react-redux";
 import { updateFormState } from "../../../store/actions/form-action";
 import { deletePost } from "../../../store/actions/post-actions";
-
+import { useTranslation } from "react-i18next";
 
 const Post = ({ post:{image, title, tags, message, createdAt, creator, likeCount, _id} }) => {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const {t} = useTranslation(['common'])
 
   return (
     <>
@@ -49,11 +50,11 @@ const Post = ({ post:{image, title, tags, message, createdAt, creator, likeCount
       </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>
           <Button aria-label="like" size="small" color="primary" >
-            <ThumbUpAltIcon fontSize="small"/> Like {likeCount}
+            <ThumbUpAltIcon fontSize="small"/>{t("like")} {likeCount}
           </Button>
           <Button aria-label="delete" size="small" color="primary" onClick={()=>dispatch(deletePost(_id))}>
             <DeleteIcon fontSize="small" />
-            Delete
+            {t("delete")}
           </Button>
         </CardActions>
       </Card>

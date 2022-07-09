@@ -1,31 +1,41 @@
 import './App.css';
-import React, { useEffect } from 'react';
-import { Container, AppBar, Typography, Grid, Grow } from '@material-ui/core';
+import React, { Suspense, useEffect, useState } from 'react';
+import { Container, AppBar, Typography, Grid, Grow, MenuItem, Select, FormControl, InputLabel, CircularProgress } from '@material-ui/core';
 import memories from './images/memories.png';
 import Form from './components/Form/Form';
 import Posts from './components/Posts/Posts';
 import useStyles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getPosts } from './store/actions/post-actions';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
-import { changeLanguage } from './store/actions/locale-action';
+import { useTranslation } from "react-i18next";
+import i18n from './i18n';
+
 
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const posts=useSelector(state=>state.posts)
+  const [lang,setLanguage]=useState("en")
+ // const {t} = useTranslation(['common'])
+
+  const handleLanguageChange =(e)=>{
+   i18n.changeLanguage(e.target.value)
+   setLanguage(e.target.value)
+  }
   
   useEffect(() => {
     dispatch(getPosts());
-    dispatch(changeLanguage("hn"))
+    setLanguage("en")
+    localStorage.clear()
   }, [dispatch]);
 
   return (
-    <>
+    <Suspense fallback={<CircularProgress />}>
     <Container maxWidth='lg'>
       <ErrorMessage />
-      <AppBar className={classes.appBar} position='static' color='inherit'>
-        <Typography className={classes.heading} variant='h2' align='center'>
+      <AppBar className={classes.appBar} position='relative' justifyContent="spaceBetween" color='inherit'>
+        <div className={classes.headerLeft}>
+        <Typography className={classes.heading} variant='h2' align='left'>
           Memories
         </Typography>
         <img
@@ -34,6 +44,21 @@ function App() {
           alt='memories'
           height='50'
         />
+        </div>
+        <FormControl className={classes.headerRight}>
+  <Select
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={lang}
+    label="Age"
+    onChange={handleLanguageChange}
+  >
+    <MenuItem value={"en"}>English</MenuItem>
+    <MenuItem value={"fr"}>French</MenuItem>
+    <MenuItem value={"hn"}>Hindi</MenuItem>
+    <MenuItem value={"mr"}>Marathi</MenuItem>
+  </Select>
+</FormControl>
       </AppBar>
       <Grow in>
         <Container>
@@ -53,7 +78,7 @@ function App() {
         </Container>
       </Grow>
     </Container>
-    </>
+    </Suspense>
   );
 }
 
