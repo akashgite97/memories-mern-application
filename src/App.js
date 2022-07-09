@@ -5,11 +5,14 @@ import memories from './images/memories.png';
 import Form from './components/Form/Form';
 import Posts from './components/Posts/Posts';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from './store/actions/post-actions';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import { useTranslation } from "react-i18next";
 import i18n from './i18n';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function App() {
@@ -17,7 +20,7 @@ function App() {
   const dispatch = useDispatch();
   const [lang,setLanguage]=useState("en")
  // const {t} = useTranslation(['common'])
-
+  const {hasError, errorMessage} = useSelector((state) => state.globalError);
   const handleLanguageChange =(e)=>{
    i18n.changeLanguage(e.target.value)
    setLanguage(e.target.value)
@@ -30,9 +33,10 @@ function App() {
   }, [dispatch]);
 
   return (
+    <>
     <Suspense fallback={<CircularProgress />}>
+    {hasError && toast.error(errorMessage.message!=="" ? errorMessage.message : "Something went wrong! Please try agin")}
     <Container maxWidth='lg'>
-      <ErrorMessage />
       <AppBar className={classes.appBar} position='relative' justifyContent="spaceBetween" color='inherit'>
         <div className={classes.headerLeft}>
         <Typography className={classes.heading} variant='h2' align='left'>
@@ -68,7 +72,7 @@ function App() {
             alignItems='stretch'
             spaceing={3}
           >
-            <Grid item xs={12} sm={7}>
+            <Grid item xs={12} sm={7} >
               <Posts />
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -77,8 +81,10 @@ function App() {
           </Grid>
         </Container>
       </Grow>
+      <ToastContainer />
     </Container>
     </Suspense>
+    </>
   );
 }
 

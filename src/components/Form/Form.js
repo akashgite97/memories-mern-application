@@ -16,6 +16,7 @@ import {
 import { formConstant } from "./form-constant";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 
 
 const Form = ({
@@ -37,6 +38,7 @@ const Form = ({
     e.preventDefault();
     if (postId && !isDisable) {
      updatePost(postId, formData).then(() => {
+      toast.warn("Memory updated successfully")
       resetFormState();
       getPosts();
       setDisable(true);
@@ -46,6 +48,8 @@ const Form = ({
         .then(() => {
           resetFormState();
           getPosts();
+        }).then(()=>{
+          toast.success("Memory created successfully")
         })
     }
   };
