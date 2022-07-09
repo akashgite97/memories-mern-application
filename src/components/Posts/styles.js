@@ -11,4 +11,9 @@ export default makeStyles((theme) => ({
   actionDiv: {
     textAlign: 'center',
   },
+  alignCenter:{
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+  }
 }));

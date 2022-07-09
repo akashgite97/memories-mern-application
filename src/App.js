@@ -7,16 +7,23 @@ import Posts from './components/Posts/Posts';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from './store/actions/post-actions';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import { changeLanguage } from './store/actions/locale-action';
 
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  const posts=useSelector(state=>state.posts)
+  
   useEffect(() => {
     dispatch(getPosts());
+    dispatch(changeLanguage("hn"))
   }, [dispatch]);
+
   return (
+    <>
     <Container maxWidth='lg'>
+      <ErrorMessage />
       <AppBar className={classes.appBar} position='static' color='inherit'>
         <Typography className={classes.heading} variant='h2' align='center'>
           Memories
@@ -32,7 +39,7 @@ function App() {
         <Container>
           <Grid
             container
-            justify='space-between'
+            justifyContent='space-between'
             alignItems='stretch'
             spaceing={3}
           >
@@ -46,6 +53,7 @@ function App() {
         </Container>
       </Grow>
     </Container>
+    </>
   );
 }
 
