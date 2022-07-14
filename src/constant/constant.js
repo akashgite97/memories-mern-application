@@ -4,13 +4,13 @@ export const HTTP_METHOD={
     GET:"GET",
     POST:"POST",
     PUT:"PUT",
-    DELETE:"DELETE"
+    DELETE:"DELETE",
+    PATCH:"PATCH"
 }
 
 export const API_URL={
 POSTS:"http://localhost:5000/posts",
 CREATE_POST:"http://localhost:5000/posts/create",
-UPDATE_POST:"http://localhost:5000/posts/update/:id"
 }
 
 export const getActionType=(actionKey)=>{

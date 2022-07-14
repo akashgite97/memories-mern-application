@@ -1,6 +1,6 @@
 import { makeAPIRequest } from '../../constant/api';
 import { API_URL, HTTP_METHOD } from '../../constant/constant';
-import { GET_ALL_POSTS, CREATE_POST, UPDATE_POST, GET_POST_BY_ID, DELETE_POST } from '../action-type-constant';
+import { GET_ALL_POSTS, CREATE_POST, UPDATE_POST, GET_POST_BY_ID, DELETE_POST, LIKE_POST } from '../action-type-constant';
 
 //GET: All Posts
 export const getPosts = () => (dispatch) => {
@@ -41,4 +41,10 @@ export const updatePost=(id,postData)=>(dispatch) => {
 export const deletePost=(id)=>(dispatch) => {
   const url = `http://localhost:5000/posts/delete/${id}`
   return makeAPIRequest(url, HTTP_METHOD.DELETE)(dispatch, DELETE_POST)
+}
+
+//PATCH: like Post
+export const likePost=(id)=>(dispatch) => {
+  const url = `http://localhost:5000/posts/${id}/likes`
+  return makeAPIRequest(url, HTTP_METHOD.PATCH)(dispatch, LIKE_POST)
 }

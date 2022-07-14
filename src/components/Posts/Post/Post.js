@@ -15,7 +15,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import moment from 'moment'
 import { useDispatch } from "react-redux";
 import { updateFormState } from "../../../store/actions/form-action";
-import { deletePost } from "../../../store/actions/post-actions";
+import { deletePost, likePost } from "../../../store/actions/post-actions";
 import { useTranslation } from "react-i18next";
 
 const Post = ({ post:{image, title, tags, message, createdAt, creator, likeCount, _id} }) => {
@@ -49,7 +49,7 @@ const Post = ({ post:{image, title, tags, message, createdAt, creator, likeCount
       <Typography className={classes.title} variant="h5" gutterBottom>{message}</Typography>
       </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>
-          <Button aria-label="like" size="small" color="primary" >
+          <Button aria-label="like" size="small" color="primary" onClick={()=>dispatch(likePost(_id))} >
             <ThumbUpAltIcon fontSize="small"/>{t("like")} {likeCount}
           </Button>
           <Button aria-label="delete" size="small" color="primary" onClick={()=>dispatch(deletePost(_id))}>

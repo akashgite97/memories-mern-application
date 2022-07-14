@@ -1,19 +1,17 @@
 import './App.css';
 import React, { Suspense, useEffect, useState } from 'react';
-import { Container, AppBar, Typography, Grid, Grow, MenuItem, Select, FormControl, InputLabel, CircularProgress } from '@material-ui/core';
+import { Container, AppBar, Typography, Grid, Grow, MenuItem, Select, FormControl, CircularProgress } from '@material-ui/core';
 import memories from './images/memories.png';
-import Form from './components/Form/Form';
 import Posts from './components/Posts/Posts';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from './store/actions/post-actions';
-import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import { useTranslation } from "react-i18next";
 import i18n from './i18n';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import { languageList } from './components/mock-data/mockConstant';
+import PostForm from './components/Form/Form'
 
 function App() {
   const classes = useStyles();
@@ -57,11 +55,10 @@ function App() {
     label="Age"
     onChange={handleLanguageChange}
   >
-    <MenuItem value={"en"}>English</MenuItem>
-    <MenuItem value={"fr"}>French</MenuItem>
-    <MenuItem value={"hn"}>Hindi</MenuItem>
-    <MenuItem value={"mr"}>Marathi</MenuItem>
-  </Select>
+   {languageList.map((data,index)=>(
+    <MenuItem key={index} value={data.value}>{data.description}</MenuItem>
+  ))} 
+    </Select>
 </FormControl>
       </AppBar>
       <Grow in>
@@ -76,7 +73,7 @@ function App() {
               <Posts />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Form />
+              <PostForm />
             </Grid>
           </Grid>
         </Container>

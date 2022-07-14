@@ -17,9 +17,11 @@ import { formConstant } from "./form-constant";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
+import {Form, Formik} from 'formik'
+import * as Yup from 'yup'
+import InputTextField from "./TextField";
 
-
-const Form = ({
+const PostForm = ({
   resetFormState,
   updateFormState,
   formData,
@@ -33,6 +35,22 @@ const Form = ({
   const [isDisable, setDisable] = useState(true);
   const { postId } = useSelector((state) => state.form);
   const {t} = useTranslation(['common'])
+
+  const initialFormValues={
+    Creator: formData.Creator,
+    Title: "",
+    Message: "",
+    Tags: "",
+    Image: "",
+  }
+
+  const formValidationSchema=Yup.object().shape({
+    Creator: Yup.string().required("This field is required"),
+    Title:  Yup.string().required("This field is required"),
+    Message: "",
+    Tags: "",
+    Image: "",
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,7 +75,7 @@ const Form = ({
   const onInputChange = (event) => {
     const { name, value } = event.target;
     updateFormState(name, value);
-    if (name == formConstant.Creator) {
+    if (name === formConstant.Creator) {
       if (value !== "") {
         setDisable(false);
       } else {
@@ -74,7 +92,6 @@ const Form = ({
    useEffect(()=>{
     if(postId){
       getPostById(postId).then(()=>{
-        console.log(getIndividualPost,"getIndividualPost")
         updateFormState(formConstant.Creator,getIndividualPost?.creator)
         updateFormState(formConstant.Message,getIndividualPost?.message)
         updateFormState(formConstant.Title,getIndividualPost?.title)
@@ -87,43 +104,36 @@ const Form = ({
 
   return (
     <Paper className={classes.paper}>
+      <Formik initialValues={{...initialFormValues}} 
+              validationSchema={formValidationSchema}
+           >
+              {() => (
       <form
-        autoComplete="off"
-        noValidate
-        onSubmit={handleSubmit}
-        className={`${classes.root} ${classes.form}`}
+      className={`${classes.root} ${classes.form}`}
+      onSubmit={handleSubmit}
       >
-        {/* //<ReadonlyLabel variant="h6" label={formConstant.createMemory} /> */}
       <Typography variant="h6">{t(formConstant.createMemory)}</Typography>
-        <TextField
+        <InputTextField
           name={formConstant.Creator}
           label={t(formConstant.Creator)}
-          variant="outlined"
-          fullWidth
           value={formData.Creator}
-          onChange={onInputChange}
+          onChange={(e)=>onInputChange(e)}
         />
-        <TextField
+        <InputTextField
           name={formConstant.Title}
           label={t(formConstant.Title)}
-          variant="outlined"
-          fullWidth
           value={formData.Title}
-          onChange={onInputChange}
+          onChange={(e)=>onInputChange(e)}
         />
-        <TextField
+        <InputTextField
           name={formConstant.Message}
           label={t(formConstant.Message)}
-          variant="outlined"
-          fullWidth
           value={formData.Message}
           onChange={onInputChange}
         />
-        <TextField
+        <InputTextField
           name={formConstant.Tags}
           label={t(formConstant.Tags)}
-          variant="outlined"
-          fullWidth
           value={formData.Tags}
           onChange={onInputChange}
         />
@@ -156,7 +166,8 @@ const Form = ({
         >
           {t(formConstant.clear)}
         </Button>
-      </form>
+      </form>)}
+      </Formik>
     </Paper>
   );
 };
@@ -173,4 +184,4 @@ const mapDispatchToProps = {
   getPostById,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

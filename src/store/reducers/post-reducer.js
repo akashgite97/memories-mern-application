@@ -5,6 +5,7 @@ import {
   GET_ALL_POSTS,
   GET_POST_BY_ID,
   UPDATE_POST,
+  LIKE_POST,
   DELETE_POST
 } from "../action-type-constant";
 
@@ -133,15 +134,43 @@ export const deletePostReducer = (
   action = DEFAULT_ACTION
 ) => {
   switch (action.type) {
-    case getActionType(DELETE_POST).FETCHING:
+    case getActionType(LIKE_POST).FETCHING:
       return {
         ...state,
         loading: true,
         error: "",
       };
     case getActionType(DELETE_POST).FULFILLED:
-      return state.posts.data.map(post=>post._id === action.payload._id ? post :  action.payload)
+      return state.posts.data.map(post=>post._id === action.payload._id ? action.payload : post  )
     case getActionType(DELETE_POST).REJECTED:
+      return {
+        data: [],
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const likePostReducer = (
+  state = defaultState,
+  action = DEFAULT_ACTION
+) => {
+  switch (action.type) {
+    case getActionType(LIKE_POST).FETCHING:
+      return {
+        ...state,
+        loading: true,
+        error: "",
+      };
+    case getActionType(LIKE_POST).FULFILLED:
+      return {
+        data: action.payload.data,
+        loading: true,
+        error: "",
+      };
+    case getActionType(LIKE_POST).REJECTED:
       return {
         data: [],
         loading: false,
