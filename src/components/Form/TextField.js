@@ -16,7 +16,6 @@ const InputTextField = ({ name, value, onChange, label }) => {
   };
 
   if (mata && mata.touched && mata.error) {
-    console.log("enter");
     configureTextField.error = true;
     configureTextField.helperText = mata.error;
   }

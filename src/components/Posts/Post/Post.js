@@ -7,16 +7,15 @@ import {
   CardMedia,
   Button,
   Typography,
-
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
 import moment from 'moment'
 import { useDispatch } from "react-redux";
-import { updateFormState } from "../../../store/actions/form-action";
-import { deletePost, likePost } from "../../../store/actions/post-actions";
 import { useTranslation } from "react-i18next";
+import {likePost, deletePost } from "../../../redux/slices/postSlice";
+import { updateFormState } from "../../../redux/slices/formSlice";
 
 const Post = ({ post:{image, title, tags, message, createdAt, creator, likeCount, _id} }) => {
   const classes = useStyles();
@@ -31,7 +30,6 @@ const Post = ({ post:{image, title, tags, message, createdAt, creator, likeCount
           title={title}
           image={image}
           alt="post image"
-          //className={classes.media}
         /> 
         <div className={classes.overlay}>
           <Typography variant="h6">{creator}</Typography>

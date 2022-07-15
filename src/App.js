@@ -1,31 +1,31 @@
 import './App.css';
 import React, { Suspense, useEffect, useState } from 'react';
 import { Container, AppBar, Typography, Grid, Grow, MenuItem, Select, FormControl, CircularProgress } from '@material-ui/core';
-import memories from './images/memories.png';
+import memories from './assets/memories.png';
 import Posts from './components/Posts/Posts';
 import useStyles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPosts } from './store/actions/post-actions';
-import { useTranslation } from "react-i18next";
+import { useDispatch } from 'react-redux';
 import i18n from './i18n';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { languageList } from './components/mock-data/mockConstant';
 import PostForm from './components/Form/Form'
+import { getAllPosts } from './redux/slices/postSlice';
+
 
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [lang,setLanguage]=useState("en")
  // const {t} = useTranslation(['common'])
-  const {hasError, errorMessage} = useSelector((state) => state.globalError);
+ // const {hasError, errorMessage} = useSelector((state) => state.globalError);
   const handleLanguageChange =(e)=>{
    i18n.changeLanguage(e.target.value)
    setLanguage(e.target.value)
   }
   
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getAllPosts());
     setLanguage("en")
     localStorage.clear()
   }, [dispatch]);
@@ -33,7 +33,7 @@ function App() {
   return (
     <>
     <Suspense fallback={<CircularProgress />}>
-    {hasError && toast.error(errorMessage.message!=="" ? errorMessage.message : "Something went wrong! Please try agin")}
+    {/* {hasError && toast.error(errorMessage.message!=="" ? errorMessage.message : "Something went wrong! Please try agin")} */}
     <Container maxWidth='lg'>
       <AppBar className={classes.appBar} position='relative' justifyContent="spaceBetween" color='inherit'>
         <div className={classes.headerLeft}>

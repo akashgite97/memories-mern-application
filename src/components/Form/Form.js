@@ -1,39 +1,26 @@
 import React, { useEffect, useState } from "react";
 import useStyles from "./styles";
-import { TextField, Button, Paper, Typography } from "@material-ui/core";
+import {Button, Paper, Typography } from "@material-ui/core";
 import FileBase from "react-file-base64";
-import { connect } from "react-redux";
-import {
-  resetFormState,
-  updateFormState,
-} from "../../store/actions/form-action";
-import {
-  createPost,
-  getPostById,
-  getPosts,
-  updatePost,
-} from "../../store/actions/post-actions";
 import { formConstant } from "./form-constant";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
-import {Form, Formik} from 'formik'
+import {Formik} from 'formik'
 import * as Yup from 'yup'
 import InputTextField from "./TextField";
+import {resetFormState,updateFormState } from '../../redux/slices/formSlice.js'
+import { getPostById, createPost, getAllPosts, updatePost } from "../../redux/slices/postSlice";
 
-const PostForm = ({
-  resetFormState,
-  updateFormState,
-  formData,
-  createPost,
-  getPosts,
-  updatePost,
-  getIndividualPost,
-  getPostById
-}) => {
+
+const PostForm = () => {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const [isDisable, setDisable] = useState(true);
   const { postId } = useSelector((state) => state.form);
+  const formData = useSelector((state) => state.form);
+  const {post} = useSelector((state) => state.posts);
+
   const {t} = useTranslation(['common'])
 
   const initialFormValues={
@@ -55,17 +42,16 @@ const PostForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (postId && !isDisable) {
-     updatePost(postId, formData).then(() => {
+     dispatch(updatePost(formData)).then(() => {
       toast.warn("Memory updated successfully")
-      resetFormState();
-      getPosts();
-      setDisable(true);
+      dispatch(resetFormState())
+      dispatch(getAllPosts())
     })
     } else if(!isDisable) {
-      createPost(formData)
+      dispatch(createPost(formData))
         .then(() => {
-          resetFormState();
-          getPosts();
+          dispatch(resetFormState())
+          dispatch(getAllPosts())
         }).then(()=>{
           toast.success("Memory created successfully")
         })
@@ -74,33 +60,33 @@ const PostForm = ({
 
   const onInputChange = (event) => {
     const { name, value } = event.target;
-    updateFormState(name, value);
-    if (name === formConstant.Creator) {
+    dispatch(updateFormState(name, value));
+     if (name === formConstant.Creator) {
       if (value !== "") {
         setDisable(false);
       } else {
         setDisable(true);
       }
-    }
+    } 
   };
 
   const handleClear = (e) => {
-    resetFormState();
+    dispatch(resetFormState());
     setDisable(true);
   };
 
    useEffect(()=>{
     if(postId){
-      getPostById(postId).then(()=>{
-        updateFormState(formConstant.Creator,getIndividualPost?.creator)
-        updateFormState(formConstant.Message,getIndividualPost?.message)
-        updateFormState(formConstant.Title,getIndividualPost?.title)
-        updateFormState(formConstant.Tags,getIndividualPost?.tags)
-        updateFormState(formConstant.Image,getIndividualPost?.image)
+      dispatch(getPostById(postId)).then(()=>{
+        dispatch(updateFormState(formConstant.Creator,post.data?.creator))
+        dispatch(updateFormState(formConstant.Message,post.data?.message))
+        dispatch(updateFormState(formConstant.Title,post.data?.title))
+        dispatch(updateFormState(formConstant.Tags,post.data?.tags))
+        dispatch(updateFormState(formConstant.Image,post.data?.image)) 
         setDisable(false);
       })
     }
-  },[postId, isDisable])
+  },[postId, isDisable]) 
 
   return (
     <Paper className={classes.paper}>
@@ -142,7 +128,7 @@ const PostForm = ({
             type="file"
             multiple={false}
             onDone={({ base64 }) => {
-              updateFormState("Image", base64);
+              dispatch(updateFormState("Image", base64));
             }}
           />
         </div>
@@ -171,17 +157,6 @@ const PostForm = ({
     </Paper>
   );
 };
-const mapStateToProps = (state) => ({
-  formData: state.form,
-  getIndividualPost:state.getIndividualPost.data
-});
-const mapDispatchToProps = {
-  updateFormState,
-  resetFormState,
-  createPost,
-  getPosts,
-  updatePost,
-  getPostById,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
+
+export default PostForm

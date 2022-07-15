@@ -11,7 +11,7 @@ const Posts = () => {
   return (
     posts.isLoading ? <div className={classes.alignCenter}><CircularProgress /></div> :(
      <Grid conatiner className={classes.conatiner} alignItems="stretch" spacing={3}>
-       {posts && posts.data && posts.data.map((post)=>(
+       {posts && posts.posts.data && posts.posts.data.map((post)=>(
         <Grid key={post._id} item xs={12} sm={6}>
           <Post post={post} />
         </Grid>
