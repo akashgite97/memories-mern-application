@@ -43,7 +43,7 @@ export const updatePost = createAsyncThunk("posts/updatePost", async (formData) 
 
 export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
   return axios
-    .delete(`${API_URL}/${id}`)
+    .delete(`${API_URL}/delete/${id}`)
     .then((res) => res);
 });
 
