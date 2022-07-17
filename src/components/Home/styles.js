@@ -20,7 +20,7 @@ export default makeStyles(() => ({
   },
   headerRight:{
     position: "absolute",
-    right: "1%",
+    right: "3%",
 },
   image: {
     marginLeft: '15px',

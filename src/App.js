@@ -1,55 +1,40 @@
 import "./App.css";
-import React, { Suspense, useEffect } from "react";
-import { Container, Grid, Grow, CircularProgress } from "@material-ui/core";
-
-import useStyles from "./styles";
-import { useDispatch, useSelector } from "react-redux";
+import React, { Suspense } from "react";
+import { CircularProgress } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getAllPosts } from "./redux/slices/postSlice";
-const PostForm = React.lazy(() => import("./components/Form/Form"));
-const Posts = React.lazy(() => import("./components/Posts/Posts"));
+import { errorMessages } from "./constant/constant";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Auth from "./components/Auth/Auth";
+import PrivateRoute from "./components/Auth/PrivateRoute";
 const Header = React.lazy(() => import("./components/Header/Header"));
+const Home = React.lazy(() => import("./components/Home/Home"));
 
 function App() {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.posts);
-
-  useEffect(() => {
-    dispatch(getAllPosts());
-  }, [dispatch]);
-
+  const posts = useSelector((state) => state.posts);
+  const user = useSelector(state =>state.auth);
+  const error = posts.error || user.error
   return (
-    <>
-      <Suspense fallback={<CircularProgress />}>
-        {error &&
-          toast.error(
-            error !== "" ? error : "Something went wrong! Please try again"
-          )}
+    <Suspense fallback={<CircularProgress />}>
+      {error && toast.error(error !== "" ? error : errorMessages)}
+      <BrowserRouter>
         <Header />
-        <Container maxWidth="lg">
-          <Grow in>
-            <Container>
-              <Grid
-                container
-                justifyContent="space-between"
-                alignItems="stretch"
-                spaceing={3}
-              >
-                <Grid item xs={12} sm={7}>
-                  <Posts />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <PostForm />
-                </Grid>
-              </Grid>
-            </Container>
-          </Grow>
-          <ToastContainer />
-        </Container>
-      </Suspense>
-    </>
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/auth" exact element={<Auth />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer />
+    </Suspense>
   );
 }
 

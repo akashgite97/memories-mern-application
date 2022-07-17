@@ -8,7 +8,7 @@ export const HTTP_METHOD={
     PATCH:"PATCH"
 }
 
-export const API_URL= "http://localhost:5000/posts"
+export const API_URL= "http://localhost:5000"
 
 
 export const getActionType=(actionKey)=>{

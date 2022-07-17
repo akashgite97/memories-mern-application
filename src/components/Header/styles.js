@@ -19,10 +19,25 @@ export default makeStyles(() => ({
     marginLeft: "28px"
   },
   headerRight:{
-    position: "absolute",
-    right: "1%",
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'space-around'
 },
   image: {
     marginLeft: '15px',
   },
+  toolBar:{
+    display:'flex',
+    justifyContent:'flex-end',
+    width:'400px',
+  },
+  profile:{
+    display:'flex',
+    width:'400px'
+  },
+  userName:{
+    display:'flex',
+    alignItems:'center'
+  },
+ 
 }));

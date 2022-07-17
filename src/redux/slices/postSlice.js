@@ -11,17 +11,17 @@ const initialState = {
 };
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
-  return axios.get(`${API_URL}/allPosts`).then((res) => res);
+  return axios.get(`${API_URL}/posts/allPosts`).then((res) => res);
 });
 
 export const getPostById = createAsyncThunk("posts/getPostById", async (id) => {
-  return axios.get(`${API_URL}/${id}`).then((res) => res);
+  return axios.get(`${API_URL}/posts/${id}`).then((res) => res);
 });
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async (formData) => {
-    return axios.post(`${API_URL}/create`, {
+    return axios.post(`${API_URL}/posts/create`, {
       title: formData.Title,
       creator: formData.Creator,
       image: formData.Image,
@@ -38,18 +38,18 @@ export const updatePost = createAsyncThunk("posts/updatePost", async (formData) 
     message:formData.Message,
     tags:formData.Tags,
   }
-  return axios.put(`${API_URL}/update/${formData.postId}`,reqBody)
+  return axios.put(`${API_URL}/posts/update/${formData.postId}`,reqBody)
 });
 
 export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
   return axios
-    .delete(`${API_URL}/delete/${id}`)
+    .delete(`${API_URL}/posts/delete/${id}`)
     .then((res) => res);
 });
 
 export const likePost = createAsyncThunk("posts/likePost", async (id) => {
     return axios
-      .patch(`${API_URL}/${id}/like`)
+      .patch(`${API_URL}/posts/${id}/like`)
       .then((res) => res);
   });
 

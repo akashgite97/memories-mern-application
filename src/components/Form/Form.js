@@ -89,7 +89,7 @@ const PostForm = () => {
   },[postId, isDisable]) 
 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} elevation={4}>
       <Formik initialValues={{...initialFormValues}} 
               validationSchema={formValidationSchema}
            >
@@ -104,6 +104,7 @@ const PostForm = () => {
           label={t(formConstant.Creator)}
           value={formData.Creator}
           onChange={(e)=>onInputChange(e)}
+          required
         />
         <InputTextField
           name={formConstant.Title}
@@ -116,6 +117,7 @@ const PostForm = () => {
           label={t(formConstant.Message)}
           value={formData.Message}
           onChange={onInputChange}
+          required
         />
         <InputTextField
           name={formConstant.Tags}
