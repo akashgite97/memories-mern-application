@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+
+import { API } from "../../constant/api";
 import { API_URL } from "../../constant/constant";
 
 const initialState = {
@@ -11,17 +12,17 @@ const initialState = {
 };
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
-  return axios.get(`${API_URL}/posts/allPosts`).then((res) => res);
+  return API.get(`${API_URL}/posts/allPosts`).then((res) => res);
 });
 
 export const getPostById = createAsyncThunk("posts/getPostById", async (id) => {
-  return axios.get(`${API_URL}/posts/${id}`).then((res) => res);
+  return API.get(`${API_URL}/posts/${id}`).then((res) => res);
 });
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async (formData) => {
-    return axios.post(`${API_URL}/posts/create`, {
+    return API.post(`${API_URL}/posts/create`, {
       title: formData.Title,
       creator: formData.Creator,
       image: formData.Image,
@@ -38,17 +39,17 @@ export const updatePost = createAsyncThunk("posts/updatePost", async (formData) 
     message:formData.Message,
     tags:formData.Tags,
   }
-  return axios.put(`${API_URL}/posts/update/${formData.postId}`,reqBody)
+  return API.put(`${API_URL}/posts/update/${formData.postId}`,reqBody)
 });
 
 export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
-  return axios
+  return API
     .delete(`${API_URL}/posts/delete/${id}`)
     .then((res) => res);
 });
 
 export const likePost = createAsyncThunk("posts/likePost", async (id) => {
-    return axios
+    return API
       .patch(`${API_URL}/posts/${id}/like`)
       .then((res) => res);
   });

@@ -8,6 +8,7 @@ import { errorMessages } from "./constant/constant";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auth from "./components/Auth/Auth";
 import PrivateRoute from "./components/Auth/PrivateRoute";
+import PostDetails from "./components/Posts/PostDetails/PostDetails";
 const Header = React.lazy(() => import("./components/Header/Header"));
 const Home = React.lazy(() => import("./components/Home/Home"));
 
@@ -31,6 +32,9 @@ function App() {
             }
           />
           <Route path="/auth" exact element={<Auth />} />
+          <Route path="/posts" exact element={<Home />} />
+          <Route path="/posts/search" exact element={<Home />} />
+          <Route path="/post/:id" exact element={<PostDetails />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

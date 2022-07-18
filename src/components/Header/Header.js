@@ -18,15 +18,15 @@ import i18n from "../../i18n";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import decode from 'jwt-decode'
 
 const Header = () => {
   const [lang, setLanguage] = useState("en");
   const classes = useStyles();
-  const user= useSelector(state => state.auth)
+  const user = useSelector(state => state.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   
-
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
     setLanguage(e.target.value);
