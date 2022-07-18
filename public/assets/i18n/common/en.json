@@ -9,5 +9,14 @@
   "clear":"Clear",
   "memories":"Memories",
   "like":"Like",
-  "delete":"Delete"
+  "delete":"Delete",
+  "firstName":"First Name",
+  "lastName":"Last Name",
+  "email":"Email",
+  "password":"Passsword",
+  "confirmPassword":"Confirm Password",
+  "signup":"Sign Up",
+  "signin":"Sign In",
+  "createAnAccount":"Create An Account",
+  "alreadyHaveAccount":"Already Have an Account"
 }

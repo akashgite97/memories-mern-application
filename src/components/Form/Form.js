@@ -2,22 +2,21 @@ import React, { useEffect, useState } from "react";
 import useStyles from "./styles";
 import {Button, Paper, Typography } from "@material-ui/core";
 import FileBase from "react-file-base64";
-import { formConstant } from "./form-constant";
+import { formConstant } from "./formConstant";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
 import {Formik} from 'formik'
 import * as Yup from 'yup'
-import InputTextField from "./TextField";
 import {resetFormState,updateFormState } from '../../redux/slices/formSlice.js'
 import { getPostById, createPost, getAllPosts, updatePost } from "../../redux/slices/postSlice";
+import InputTextField from "../InputFileds/TextField";
 
 
 const PostForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch()
   const [isDisable, setDisable] = useState(true);
-  const { postId } = useSelector((state) => state.form);
   const formData = useSelector((state) => state.form);
   const {post} = useSelector((state) => state.posts);
 
@@ -41,7 +40,7 @@ const PostForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (postId && !isDisable) {
+    if (formData.postId && !isDisable) {
      dispatch(updatePost(formData)).then(() => {
       toast.warn("Memory updated successfully")
       dispatch(resetFormState())
@@ -76,8 +75,8 @@ const PostForm = () => {
   };
 
    useEffect(()=>{
-    if(postId){
-      dispatch(getPostById(postId)).then(()=>{
+    if(formData.postId){
+      dispatch(getPostById(formData.postId)).then(()=>{
         dispatch(updateFormState(formConstant.Creator,post.data?.creator))
         dispatch(updateFormState(formConstant.Message,post.data?.message))
         dispatch(updateFormState(formConstant.Title,post.data?.title))
@@ -86,7 +85,7 @@ const PostForm = () => {
         setDisable(false);
       })
     }
-  },[postId, isDisable]) 
+  },[formData.postId, isDisable]) 
 
   return (
     <Paper className={classes.paper} elevation={4}>
@@ -101,27 +100,27 @@ const PostForm = () => {
       <Typography variant="h6">{t(formConstant.createMemory)}</Typography>
         <InputTextField
           name={formConstant.Creator}
-          label={t(formConstant.Creator)}
+          label={formConstant.Creator}
           value={formData.Creator}
           onChange={(e)=>onInputChange(e)}
           required
         />
         <InputTextField
           name={formConstant.Title}
-          label={t(formConstant.Title)}
+          label={formConstant.Title}
           value={formData.Title}
           onChange={(e)=>onInputChange(e)}
         />
         <InputTextField
           name={formConstant.Message}
-          label={t(formConstant.Message)}
+          label={formConstant.Message}
           value={formData.Message}
           onChange={onInputChange}
           required
         />
         <InputTextField
           name={formConstant.Tags}
-          label={t(formConstant.Tags)}
+          label={formConstant.Tags}
           value={formData.Tags}
           onChange={onInputChange}
         />
@@ -143,7 +142,7 @@ const PostForm = () => {
           fullWidth
           disabled={isDisable}
         >
-          {postId ? t(formConstant.update) : t(formConstant.submit)}
+          {formData.postId ? t(formConstant.update) : t(formConstant.submit)}
         </Button>
         <Button
           variant="contained"

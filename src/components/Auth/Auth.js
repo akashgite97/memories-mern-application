@@ -7,13 +7,14 @@ import {
   Avatar,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import InputTextField from "../Form/TextField";
 import useStyles from "./styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { signin, signup } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-
+import { authTile } from "./authConstant";
+import InputTextField from "../InputFileds/TextField";
+import { useTranslation } from "react-i18next";
 
 const initialState = {
   email: "",
@@ -31,6 +32,8 @@ const Auth = () => {
   const { email, password, confirmPassword, firstName, lastName } = data;
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {t} = useTranslation()
+  
 
   const switchAuthMode = () => {
     setSignup((prevIsSignup) => !prevIsSignup);
@@ -58,23 +61,23 @@ const Auth = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography variant="h5" alignItems="center">
-          {isSignUp ? "Sign Up" : "Sign In"}
+          {isSignUp ? t(authTile.signup) : t(authTile.signin)}
         </Typography>
         <form className={`${classes.form} ${classes.root}`}  onSubmit={(e)=>handleSubmit(e)}>
           <Grid container spacing={2}>
             {isSignUp && (
               <>
                 <InputTextField
-                  name="firstName"
-                  label="First Name"
+                  name={authTile.firstName}
+                  label={authTile.firstName}
                   half
                   value={firstName}
                   onChange={(e) => handleChange(e)}
                   required
                 />
                 <InputTextField
-                  name="lastName"
-                  label="Last Name"
+                  name={authTile.lastName}
+                  label={authTile.lastName}
                   half
                   value={lastName}
                   onChange={(e) => handleChange(e)}
@@ -84,8 +87,8 @@ const Auth = () => {
             )}
             <InputTextField
               type="email"
-              name="email"
-              label="Email"
+              name={authTile.email}
+              label={authTile.email}
               autoFocus
               value={email}
               onChange={(e) => handleChange(e)}
@@ -93,8 +96,8 @@ const Auth = () => {
             />
             <InputTextField
               type={isShowPassword ? "text" : "password"}
-              name="password"
-              label="Password"
+              name={authTile.password}
+              label={authTile.password}
               value={password}
               onChange={(e) => handleChange(e)}
               required
@@ -102,8 +105,8 @@ const Auth = () => {
             {isSignUp && (
               <InputTextField
                 type="password"
-                name="confirmPassword"
-                label="Confirm Password"
+                name={authTile.confirmPassword}
+                label={authTile.confirmPassword}
                 value={confirmPassword}
                 onChange={(e) => handleChange(e)}
               />
@@ -118,14 +121,15 @@ const Auth = () => {
             onClick={ (e)=>handleSubmit(e)}
            
           >
-            {isSignUp ? "SIGN UP" : "SIGN IN"}
+            {isSignUp ? t(authTile.signin) : t(authTile.signup)}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
               <Button onClick={switchAuthMode}>
                 {isSignUp
-                  ? "Already Have an account? Sign In"
-                  : "Create an account"}
+                  ? t(authTile.alreadyHaveAccount)
+                  : t(authTile.createAccount)
+                }
               </Button>
             </Grid>
           </Grid>

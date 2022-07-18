@@ -9,5 +9,14 @@
   "clear":"रीसेट",
   "memories":"आठवणी",
   "like":"लाईक करा",
-  "delete":"हटवा"
+  "delete":"हटवा",
+  "firstName":"नाव",
+  "lastName":"आडनाव",
+  "email":"ईमेल",
+  "password":"पासवर्ड",
+  "confirmPassword":"पासवर्डची पुष्टी करा",
+  "signup":"नवीन खाते उघडा",
+  "signin":"लॉगिन करा",
+  "createAnAccount":"नवीन खाते उघडा",
+  "alreadyHaveAccount":"आधीपासूनच एक खाते आहे"
 }
