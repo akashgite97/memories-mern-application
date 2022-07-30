@@ -18,24 +18,24 @@ import i18n from "../../i18n";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import decode from 'jwt-decode'
+import decode from "jwt-decode";
 
 const Header = () => {
   const [lang, setLanguage] = useState("en");
   const classes = useStyles();
-  const user = useSelector(state => state.auth)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  
+  const user = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isAuthenticated = JSON.parse(localStorage.getItem("profile"));
+
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
     setLanguage(e.target.value);
   };
 
   useEffect(() => {
-    window.localStorage.clear();
+    window.localStorage.removeItem("i18nextLng");
   }, [lang]);
-
 
   return (
     <Container maxWidth="xl">
@@ -51,7 +51,7 @@ const Header = () => {
             justify="flex-start"
             className={classes.headerLeft}
             xs={12}
-            sm={6}
+            sm={4}
           >
             <Typography className={classes.heading} variant="h2" align="left">
               Memories
@@ -66,19 +66,16 @@ const Header = () => {
           <Grid
             item
             xs={12}
-            sm={2}
+            sm={4}
             sx={{ display: "flex" }}
             alignItems="center"
             justify="center"
             className={classes.headerRight}
           >
-            {user.isAuthenticated ? (
+            {isAuthenticated ? (
               <Toolbar className={classes.toolBar}>
                 <div className={classes.profile}>
-                  <Avatar
-                    src={user.details.imageUr}
-                    alt={user.details.name}
-                  />
+                  <Avatar src={user.details.imageUr} alt={user.details.name} />
                   <Typography variant="h6" className={classes.userName}>
                     {user.details.name}
                   </Typography>
@@ -86,34 +83,39 @@ const Header = () => {
                     variant="contained"
                     className={classes.logout}
                     color="secondary"
-                    onClick={()=>dispatch(logout())}
-
+                    onClick={() => dispatch(logout())}
                   >
                     Log Out
                   </Button>
                 </div>
               </Toolbar>
             ) : (
-              <Button variant="contained" color="secondary" onClick={()=>navigate('/auth')} >
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate("/auth")}
+              >
                 Log In
               </Button>
             )}
-            <FormControl>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={lang}
-                label="Age"
-                onChange={(e)=>handleLanguageChange(e)}
-              >
-                {languageList.map((data, index) => (
-                  <MenuItem key={index} value={data.value}>
-                    {data.description}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl> 
           </Grid>
+        </Grid>
+        <Grid sm={1} item>
+          <FormControl>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={lang}
+              label="Age"
+              onChange={(e) => handleLanguageChange(e)}
+            >
+              {languageList.map((data, index) => (
+                <MenuItem key={index} value={data.value}>
+                  {data.description}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
       </AppBar>
     </Container>

@@ -54,7 +54,7 @@ const Post = ({
 
   return (
     <>
-      <Card sx={{ maxWidth: 345 }} className={classes.card}>
+      <Card sx={{ maxWidth: 345 }} className={classes.card} raised elevation={6}>
         <CardMedia
           component="img"
           title={title}

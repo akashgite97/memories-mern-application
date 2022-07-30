@@ -19,6 +19,7 @@ const PostForm = () => {
   const [isDisable, setDisable] = useState(true);
   const formData = useSelector((state) => state.form);
   const {post} = useSelector((state) => state.posts);
+    const isAuthenticated = JSON.parse(localStorage.getItem ("profile"));
 
   const {t} = useTranslation(['common'])
 
@@ -88,7 +89,8 @@ const PostForm = () => {
   },[formData.postId, isDisable]) 
 
   return (
-    <Paper className={classes.paper} elevation={4}>
+    <>
+    {isAuthenticated ? (  <Paper className={classes.paper} elevation={4}>
       <Formik initialValues={{...initialFormValues}} 
               validationSchema={formValidationSchema}
            >
@@ -155,7 +157,9 @@ const PostForm = () => {
         </Button>
       </form>)}
       </Formik>
-    </Paper>
+    </Paper>) : <Typography varint='h4' style={{margin:"10px 0px"}}>Please sign in to create your own memory<br /> and like other's memories</Typography>}
+  
+    </>
   );
 };
 

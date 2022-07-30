@@ -3,7 +3,8 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function PrivateRoute({ children }) {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const isAuthenticated = JSON.parse(localStorage.getItem ("profile"));
+  
 
   if (!isAuthenticated) {
     // not logged in so redirect to login page

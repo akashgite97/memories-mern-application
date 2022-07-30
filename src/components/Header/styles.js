@@ -33,7 +33,8 @@ export default makeStyles(() => ({
   },
   profile:{
     display:'flex',
-    width:'400px'
+    width:'400px',
+    justifyContent:'space-around'
   },
   userName:{
     display:'flex',

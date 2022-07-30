@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
+  appSearchBar:{
+    borderRadius:4,
+    marginBottom:'1rem',
+    display:'flex',
+    padding:'16px'
+  },
   appBar: {
     borderRadius: 15,
     margin: '30px 0',
