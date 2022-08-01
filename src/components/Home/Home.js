@@ -15,7 +15,6 @@ import Paginate from "../Pagination/Pagination";
 import ChipInput from "material-ui-chip-input";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import InputTextField from "../InputFileds/TextField";
-import { updateFormState } from "../../redux/slices/formSlice";
 const PostForm = React.lazy(() => import("../Form/Form"));
 const Posts = React.lazy(() => import("../Posts/Posts"));
 
@@ -27,8 +26,9 @@ const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //const [query] = useSearchParams()
   const query = useQuery();
-  const page = query.get("page") || 1;
+  const page = query.get('page') || 1
   const searchQury = query.get("searchQuery");
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
@@ -97,7 +97,7 @@ const Home = () => {
                 </Button>
               </AppBar>
               <PostForm />
-              <Paper elevation={4}>
+              <Paper elevation={4} className={classes.pagination}>
                 <Paginate page={page} />
               </Paper>
             </Grid>

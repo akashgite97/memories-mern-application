@@ -31,10 +31,10 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/auth" exact element={<Auth />} />
+          <Route  exact path="/auth"  element={<Auth />} />
           <Route path="/posts" exact element={<Home />} />
           <Route path="/posts/search" exact element={<Home />} />
-          <Route path="/post/:id" exact element={<PostDetails />} />
+          <Route path="/posts/:id" exact element={<PostDetails />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

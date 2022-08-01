@@ -13,26 +13,28 @@ import {
   Grid,
 } from "@material-ui/core";
 import useStyles from "./styles";
-import { languageList } from "../../mock-data/mockConstant";
 import i18n from "../../i18n";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import decode from "jwt-decode";
+import { languageList } from "../../constant/constant";
+import { user } from "../../util";
 
 const Header = () => {
   const [lang, setLanguage] = useState("en");
   const classes = useStyles();
-  const user = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuthenticated = JSON.parse(localStorage.getItem("profile"));
 
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
     setLanguage(e.target.value);
   };
 
+  const handleLogout = () =>{
+    dispatch(logout())
+    navigate('/auth')
+  }
   useEffect(() => {
     window.localStorage.removeItem("i18nextLng");
   }, [lang]);
@@ -72,18 +74,18 @@ const Header = () => {
             justify="center"
             className={classes.headerRight}
           >
-            {isAuthenticated ? (
+            {user ? (
               <Toolbar className={classes.toolBar}>
                 <div className={classes.profile}>
-                  <Avatar src={user.details.imageUr} alt={user.details.name} />
+                  <Avatar src={user.result.imageUr} alt={user.result.name} />
                   <Typography variant="h6" className={classes.userName}>
-                    {user.details.name}
+                    {user.result.name}
                   </Typography>
                   <Button
                     variant="contained"
                     className={classes.logout}
                     color="secondary"
-                    onClick={() => dispatch(logout())}
+                    onClick={handleLogout}
                   >
                     Log Out
                   </Button>

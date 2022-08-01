@@ -7,6 +7,7 @@ import {
   CardMedia,
   Button,
   Typography,
+  ButtonBase
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
@@ -17,14 +18,22 @@ import { useTranslation } from "react-i18next";
 import { likePost, deletePost } from "../../../redux/slices/postSlice";
 import { updateFormState } from "../../../redux/slices/formSlice";
 import ThumbUpAltIconOutlined from "@material-ui/icons/ThumbUpAltOutlined";
+import { useNavigate } from "react-router-dom";
+
 
 const Post = ({
   post: { image, title, tags, message, createdAt, creator, likes, _id },
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { t } = useTranslation(["common"]);
   const user = JSON.parse(localStorage.getItem("profile"));
+
+  const openPost = () => {
+    // dispatch(getPost(post._id, history));
+    navigate(`/posts/${_id}`);
+  };
 
   const Like = () => {
     if (likes.length > 0) {
@@ -55,6 +64,12 @@ const Post = ({
   return (
     <>
       <Card sx={{ maxWidth: 345 }} className={classes.card} raised elevation={6}>
+      <ButtonBase
+        component="span"
+        name="test"
+        className={classes.cardAction}
+        onClick={openPost}
+      >
         <CardMedia
           component="img"
           title={title}
@@ -86,6 +101,7 @@ const Post = ({
             {message}
           </Typography>
         </CardContent>
+        </ButtonBase>
         <CardActions disableSpacing className={classes.cardActions}>
           <Button
             aria-label="like"
@@ -100,7 +116,7 @@ const Post = ({
             <Button
               aria-label="delete"
               size="small"
-              color="primary"
+              className={classes.deleteBtn}
               onClick={() => dispatch(deletePost(_id))}
             >
               <DeleteIcon fontSize="small" />

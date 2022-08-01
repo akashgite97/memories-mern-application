@@ -121,7 +121,7 @@ const Auth = () => {
             onClick={ (e)=>handleSubmit(e)}
            
           >
-            {isSignUp ? t(authTile.signin) : t(authTile.signup)}
+            {isSignUp ? t(authTile.signup) : t(authTile.signin)}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>

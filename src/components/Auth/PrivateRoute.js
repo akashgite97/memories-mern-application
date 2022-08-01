@@ -1,12 +1,10 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { user } from "../../util";
 
 function PrivateRoute({ children }) {
-  const isAuthenticated = JSON.parse(localStorage.getItem ("profile"));
-  
-
-  if (!isAuthenticated) {
+  if (!user) {
     // not logged in so redirect to login page
     return <Navigate to="/auth" />;
   }

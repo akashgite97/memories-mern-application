@@ -10,15 +10,13 @@ export const HTTP_METHOD={
 
 export const API_URL= "http://localhost:5000"
 
-
-export const getActionType=(actionKey)=>{
-    return{
-        FETCHING:`${actionKey}_fetching`,
-        FULFILLED:`${actionKey}_fullfilled`,
-        REJECTED:`${actionKey}_rejected`
-    }
-}
-
 export const errorMessages={
     error:"Something went wrong!",
 }
+
+export const languageList=[
+    {value:"en", description:"English"},
+    {value:"fr", description:"French"},
+    {value:"hn", description:"Hindi"},
+    {value:"mr", description:"Marathi"}
+]

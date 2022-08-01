@@ -28,7 +28,14 @@ export default makeStyles(() => ({
     position: "absolute",
     right: "3%",
 },
-  image: {
+image: {
     marginLeft: '15px',
+},
+pagination : {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "11px",
+    marginTop: "10px"
   },
 }));

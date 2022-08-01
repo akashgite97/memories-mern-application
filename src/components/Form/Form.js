@@ -11,6 +11,8 @@ import * as Yup from 'yup'
 import {resetFormState,updateFormState } from '../../redux/slices/formSlice.js'
 import { getPostById, createPost, getAllPosts, updatePost } from "../../redux/slices/postSlice";
 import InputTextField from "../InputFileds/TextField";
+import { user } from "../../util";
+import { useNavigate } from "react-router-dom";
 
 
 const PostForm = () => {
@@ -19,8 +21,7 @@ const PostForm = () => {
   const [isDisable, setDisable] = useState(true);
   const formData = useSelector((state) => state.form);
   const {post} = useSelector((state) => state.posts);
-    const isAuthenticated = JSON.parse(localStorage.getItem ("profile"));
-
+  const navigate = useNavigate()
   const {t} = useTranslation(['common'])
 
   const initialFormValues={
@@ -49,7 +50,8 @@ const PostForm = () => {
     })
     } else if(!isDisable) {
       dispatch(createPost(formData))
-        .then(() => {
+        .then((res) => {
+          navigate(`/posts/${res?.payload?.data?._id}`)
           dispatch(resetFormState())
           dispatch(getAllPosts())
         }).then(()=>{
@@ -90,7 +92,7 @@ const PostForm = () => {
 
   return (
     <>
-    {isAuthenticated ? (  <Paper className={classes.paper} elevation={4}>
+    {user ? (  <Paper className={classes.paper} elevation={4}>
       <Formik initialValues={{...initialFormValues}} 
               validationSchema={formValidationSchema}
            >

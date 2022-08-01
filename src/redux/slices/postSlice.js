@@ -69,6 +69,14 @@ export const getPostBySearch = createAsyncThunk("posts/getPostBySearch", async (
       .then((res) => res);
   });
 
+
+//Comment Post  
+export const commentPost = createAsyncThunk("posts/commentPost", async (commentDetails) => {
+  const {id, finalComment} = commentDetails
+  return API
+    .post(`${API_URL}/posts/${id}/commentPost`,{comment:finalComment})
+});
+
 const postSlice = createSlice({
   name: "post",
   initialState: initialState,
@@ -157,15 +165,15 @@ const postSlice = createSlice({
         state.error = action.error.message;
       });
     //likePost
-    builder.addCase(getPostBySearch.pending, (state) => {
+    builder.addCase(getPostBySearch.pending || commentPost.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getPostBySearch.fulfilled, (state, action) => {
+    builder.addCase(getPostBySearch.fulfilled || commentPost.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = "";
       state.posts = action.payload.data
     });
-    builder.addCase(getPostBySearch.rejected, (state, action) => {
+    builder.addCase(getPostBySearch.rejected || commentPost.rejected, (state, action) => {
       state.isLoading = false;
       state.posts = ''
       state.error = action.error.message;
