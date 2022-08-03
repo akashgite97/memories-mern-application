@@ -23,7 +23,7 @@ const CommentSection = ({ post }) => {
   };
 
   return (
-    <div className={classes.commentsOuterContainer} style={{ width: "50%" }}>
+    <div className={classes.commentsOuterContainer}>
       <div className={classes.commentsInnerContainer}>
         <Typography gutterBottom variant="h6">
           Comments
@@ -36,7 +36,7 @@ const CommentSection = ({ post }) => {
         <div ref={commentsRef} />
       </div>
       {user?.result?.name && (
-        <div style={{ width: "50%" }}>
+        <div style={{ width: "70%" }}>
           <Typography variant="h6" gutterBottom>
             Write a Comment
           </Typography>
@@ -52,6 +52,7 @@ const CommentSection = ({ post }) => {
             style={{ marginTop: "10px" }}
             variant="contained"
             fullWidth
+            color="primary"
             disabled={!comment}
             onClick={handleCommentClick}
           >

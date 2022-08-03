@@ -14,7 +14,8 @@ export default makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   marginLeft:{
-marginLeft:'14px'
+marginLeft:'14px',
+marginTop: '14px'
   },
   actionDiv: {
     textAlign: 'center',

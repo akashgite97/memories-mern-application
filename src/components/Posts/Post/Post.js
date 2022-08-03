@@ -31,7 +31,6 @@ const Post = ({
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const openPost = () => {
-    // dispatch(getPost(post._id, history));
     navigate(`/posts/${_id}`);
   };
 

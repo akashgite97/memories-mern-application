@@ -14,16 +14,17 @@ const Home = React.lazy(() => import("./components/Home/Home"));
 
 function App() {
   const posts = useSelector((state) => state.posts);
-  const user = useSelector(state =>state.auth);
-  const error = posts.error || user.error
+  const user = useSelector((state) => state.auth);
+  const error = posts.error || user.error;
   return (
     <Suspense fallback={<CircularProgress />}>
       {error && toast.error(error !== "" ? error : errorMessages)}
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route exact path="/" element={<Home />} />
           <Route
-            path="/"
+            path="/posts"
             exact
             element={
               <PrivateRoute>
@@ -31,10 +32,24 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route  exact path="/auth"  element={<Auth />} />
+          <Route exact path="/auth" element={<Auth />} />
           <Route path="/posts" exact element={<Home />} />
-          <Route path="/posts/search" exact element={<Home />} />
-          <Route path="/posts/:id" exact element={<PostDetails />} />
+          <Route
+            path="/posts/search"
+            exact
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/posts/:id"
+            exact
+            element={
+                <PostDetails />
+            }
+          />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

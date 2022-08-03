@@ -14,7 +14,7 @@ export const signin = createAsyncThunk("users/signin", async (formData) => {
     return API.post(`${API_URL}/user/signin`,{
         email:formData.email,
         password:formData.password
-      }).then((res) => res)
+      }).then((res) => res).catch((error)=>console.log(error,"error mesasge"))
   });
 
   export const signup = createAsyncThunk("users/signup", async (formData) => {
@@ -53,7 +53,7 @@ const authSlice = createSlice({
       builder.addCase(signin.rejected,(state, action)=>{
         state.isLoading = true
         state.authData =''
-        state.error = action.error.message
+        state.error = action
       })
         //signup
       builder.addCase(signup.pending,(state)=>{

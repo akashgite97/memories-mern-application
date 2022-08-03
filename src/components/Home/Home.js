@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import {
   CircularProgress,
   Container,
@@ -8,7 +8,7 @@ import {
   AppBar,
   Button,
 } from "@material-ui/core";
-import { getAllPosts, getPostBySearch } from "../../redux/slices/postSlice";
+import { getPostBySearch } from "../../redux/slices/postSlice";
 import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import Paginate from "../Pagination/Pagination";

@@ -14,9 +14,9 @@ import {
 } from "@material-ui/core";
 import useStyles from "./styles";
 import i18n from "../../i18n";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { languageList } from "../../constant/constant";
 import { user } from "../../util";
 
@@ -56,7 +56,9 @@ const Header = () => {
             sm={4}
           >
             <Typography className={classes.heading} variant="h2" align="left">
+             <Link to="/">
               Memories
+              </Link>
             </Typography>
             <img
               className={classes.image}
@@ -77,9 +79,9 @@ const Header = () => {
             {user ? (
               <Toolbar className={classes.toolBar}>
                 <div className={classes.profile}>
-                  <Avatar src={user.result.imageUr} alt={user.result.name} />
+                  <Avatar src={user?.result?.imageUr} alt={user?.result?.name} />
                   <Typography variant="h6" className={classes.userName}>
-                    {user.result.name}
+                    {user?.result?.name}
                   </Typography>
                   <Button
                     variant="contained"

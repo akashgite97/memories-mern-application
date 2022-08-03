@@ -6,6 +6,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import useStyles from './styles';
 import { getPostById, getPostBySearch } from '../../../redux/slices/postSlice';
 import CommentSection from '../../CommentSection.js';
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const Post = () => {
   const { post, isLoading } = useSelector((state) => state.posts);
@@ -39,7 +40,12 @@ const Post = () => {
   const recommendedPosts = posts?.data?.filter(({ _id }) => _id !== post._id);
 
   return (
-    <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
+    <>
+    <div className={classes.backBtn} onClick={()=>navigate('/')}>
+    <ArrowBackIcon />
+    <Typography variant="subtitle" style={{marginLeft:"5px"}}>Back to Posts</Typography>
+    </div>
+    <Paper className={classes.pageDetails} elevation={6}>
       <div className={classes.card}>
         <div className={classes.section}>
           <Typography variant="h3" component="h2">{post.data.title}</Typography>
@@ -85,6 +91,7 @@ const Post = () => {
         </div>
       )} 
     </Paper>
+    </>
   );
 };
 

@@ -33,7 +33,10 @@ const Auth = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {t} = useTranslation()
+  const auth = useSelector(state => state.auth)
   
+
+  console.log("auth",auth)
 
   const switchAuthMode = () => {
     setSignup((prevIsSignup) => !prevIsSignup);

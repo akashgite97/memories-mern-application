@@ -51,4 +51,15 @@ export default makeStyles((theme) => ({
     overflowY: 'auto',
     marginRight: '30px',
   },
+  backBtn:{
+  display:'flex',
+  alignItems:'center',
+  padding: "0px 0px 25px 25px",
+  cursor:'pointer',
+  color: '#3f51b5'
+  },
+  pageDetails:{
+    padding: '20px',
+    borderRadius: '15px', 
+  }
 }));    

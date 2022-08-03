@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { user } from "../../util";
 
 function PrivateRoute({ children }) {
-  if (!user) {
+  if (!user.result) {
     // not logged in so redirect to login page
     return <Navigate to="/auth" />;
   }
