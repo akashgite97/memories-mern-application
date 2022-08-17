@@ -3,7 +3,7 @@ import { API } from "../../constant/api";
 import { API_URL } from "../../constant/constant";
 
 const initialState = {
-    details:'',
+    user:'',
     isAuthenticated: false,
     isLoading:false,
     error:'',
@@ -33,7 +33,7 @@ const authSlice = createSlice({
   reducers:{
     logout:(state)=>{
         localStorage.clear()
-        return {...initialState}
+        return {initialState}
       },
   },
   extraReducers:(builder)=>{
@@ -46,7 +46,7 @@ const authSlice = createSlice({
     builder.addCase(signin.fulfilled,(state, action)=>{
         state.isLoading = true
         state.error =''
-        state.details = action.payload.data.result
+        state.user = action.payload.data.result
         state.isAuthenticated = true
         localStorage.setItem('profile',JSON.stringify({...action.payload?.data}))
       })

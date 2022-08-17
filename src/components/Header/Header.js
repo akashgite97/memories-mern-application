@@ -14,17 +14,17 @@ import {
 } from "@material-ui/core";
 import useStyles from "./styles";
 import i18n from "../../i18n";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { languageList } from "../../constant/constant";
-import { user } from "../../util";
 
 const Header = () => {
   const [lang, setLanguage] = useState("en");
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {isAuthenticated, user} = useSelector(state => state.auth)
 
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
@@ -33,6 +33,7 @@ const Header = () => {
 
   const handleLogout = () =>{
     dispatch(logout())
+    localStorage.removeItem("profile")
     navigate('/auth')
   }
   useEffect(() => {
@@ -76,12 +77,12 @@ const Header = () => {
             justify="center"
             className={classes.headerRight}
           >
-            {user ? (
+            {isAuthenticated ? (
               <Toolbar className={classes.toolBar}>
                 <div className={classes.profile}>
-                  <Avatar src={user?.result?.imageUr} alt={user?.result?.name} />
+                  <Avatar src={user?.imageUr} alt={user?.name} />
                   <Typography variant="h6" className={classes.userName}>
-                    {user?.result?.name}
+                    {user?.name}
                   </Typography>
                   <Button
                     variant="contained"

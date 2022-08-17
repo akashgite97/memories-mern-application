@@ -98,7 +98,7 @@ const Auth = () => {
               required
             />
             <InputTextField
-              type={isShowPassword ? "text" : "password"}
+              type= "password"
               name={authTile.password}
               label={authTile.password}
               value={password}

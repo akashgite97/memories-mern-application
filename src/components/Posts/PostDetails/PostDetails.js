@@ -23,7 +23,7 @@ const Post = () => {
     if (post) {
       dispatch(getPostBySearch({ search: 'none', tags: post?.data?.tags.join(',') }));
     }
-  }, [post]);
+  }, [dispatch]);
 
   if (!post) return null;
 
@@ -37,7 +37,7 @@ const Post = () => {
     );
   }
 
-  const recommendedPosts = posts?.data?.filter(({ _id }) => _id !== post._id);
+  const recommendedPosts = posts?.data?.filter(({ _id }) => _id !== post.data._id);
 
   return (
     <>
@@ -66,14 +66,14 @@ const Post = () => {
           <Divider style={{ margin: '20px 0' }} />
           <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
           <Divider style={{ margin: '20px 0' }} />
-          <CommentSection post={post.data} />
+          <CommentSection post={post?.data} />
           <Divider style={{ margin: '20px 0' }} />
         </div>
         <div className={classes.imageSection}>
           <img className={classes.media} src={post.data.image || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
         </div>
       </div>
-       {!!recommendedPosts?.length && (
+       {recommendedPosts?.length && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">You might also like:</Typography>
           <Divider />

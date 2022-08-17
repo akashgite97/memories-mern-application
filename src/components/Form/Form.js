@@ -17,7 +17,6 @@ import {
   updatePost,
 } from "../../redux/slices/postSlice";
 import InputTextField from "../InputFileds/TextField";
-import { user } from "../../util";
 import { useNavigate } from "react-router-dom";
 
 const PostForm = () => {
@@ -28,6 +27,7 @@ const PostForm = () => {
   const { post } = useSelector((state) => state.posts);
   const navigate = useNavigate();
   const { t } = useTranslation(["common"]);
+  const {isAuthenticated} = useSelector(state => state.auth)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -82,7 +82,7 @@ const PostForm = () => {
 
   return (
     <>
-      {user?.result ? (
+      {isAuthenticated ? (
         <Paper className={classes.paper} elevation={4}>
           <form
             className={`${classes.root} ${classes.form}`}

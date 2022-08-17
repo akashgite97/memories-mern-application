@@ -15,27 +15,17 @@ const CommentSection = ({ post }) => {
 
   const handleCommentClick = async () => {
     const finalComment = `${user.result.name} : ${comment}`;
-    const data = { finalComment, id: post._id };
-    const newComment = await dispatch(commentPost(data));
+    const commentsObj = { finalComment, id: post._id };
+    const newComment = await dispatch(commentPost(commentsObj));
     setComments(newComment.payload.data.comments);
     setComment('');
     commentsRef.current.scrollIntoView({ behaviour: "smooth" });
   };
 
   return (
-    <div className={classes.commentsOuterContainer}>
+    <>
       <div className={classes.commentsInnerContainer}>
-        <Typography gutterBottom variant="h6">
-          Comments
-        </Typography>
-        {comments?.map((comment, i) => (
-          <Typography key={i} gutterBottom variant="subtitle1">
-            {comment}
-          </Typography>
-        ))}
-        <div ref={commentsRef} />
-      </div>
-      {user?.result?.name && (
+        {user?.result?.name && (
         <div style={{ width: "70%" }}>
           <Typography variant="h6" gutterBottom>
             Write a Comment
@@ -60,7 +50,18 @@ const CommentSection = ({ post }) => {
           </Button>
         </div>
       )}
-    </div>
+      <Typography gutterBottom variant="h6" style={{marginTop:"20px"}}>
+          Comments:
+        </Typography>
+        {comments?.map((comment, i) => (
+          <Typography key={i} gutterBottom variant="subtitle1">
+            {comment}
+          </Typography>
+        ))}
+        <div ref={commentsRef} />
+      </div>
+
+    </>
   );
 };
 
