@@ -1,6 +1,6 @@
 import { Button, Typography } from "@material-ui/core";
 import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { commentPost } from "../../redux/slices/postSlice";
 import { user } from "../../util";
 import InputTextField from "../InputFileds/TextField";
@@ -12,6 +12,7 @@ const CommentSection = ({ post }) => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const commentsRef = useRef();
+  const {user} = useSelector(state => state.auth)
 
   const handleCommentClick = async () => {
     const finalComment = `${user.result.name} : ${comment}`;
@@ -25,7 +26,7 @@ const CommentSection = ({ post }) => {
   return (
     <>
       <div className={classes.commentsInnerContainer}>
-        {user?.result?.name && (
+        {user && (
         <div style={{ width: "70%" }}>
           <Typography variant="h6" gutterBottom>
             Write a Comment

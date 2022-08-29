@@ -28,7 +28,7 @@ const Post = ({
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { t } = useTranslation(["common"]);
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const {user, isAuthenticated} = useSelector(state => state.auth)
 
   const openPost = () => {
     navigate(`/posts/${_id}`);
@@ -36,7 +36,7 @@ const Post = ({
 
   const Like = () => {
     if (likes.length > 0) {
-      return likes.find((like) => like === user?.result?._id) ? (
+      return likes.find((like) => like === user?._id) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
           &nbsp;
@@ -79,7 +79,7 @@ const Post = ({
           <Typography variant="h6">{creator}</Typography>
           <Typography variant="body2">{moment(createdAt).fromNow()}</Typography>
         </div>
-        {user?.result?._id === creator && (
+        {user?._id === creator && (
           <div className={classes.overlay2}>
             <Button
               style={{ color: "white" }}
@@ -102,16 +102,16 @@ const Post = ({
         </CardContent>
         </ButtonBase>
         <CardActions disableSpacing className={classes.cardActions}>
-          <Button
+          <Button 
             aria-label="like"
-            disabled={!user?.result}
+            disabled={!isAuthenticated}
             size="small"
             color="primary"
             onClick={() => dispatch(likePost(_id))}
           >
             <Like />
           </Button>
-          {user?.result?._id === creator && (
+          {user?._id === creator && (
             <Button
               aria-label="delete"
               size="small"

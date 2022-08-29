@@ -2,15 +2,15 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
-export const signin = async (req, res) => {
+export const signin = async (req, res) => { 
   const { email, password } = req.body;
-
+  console.log(req.body)
   try {
     const existingUser = await User.findOne({ email });
-    console.log(existingUser)
+  console.log("existingUser",existingUser)
 
-    if (!existingUser)
-      return res.status(500).json({ message: "User dose not exits" });
+     if (!existingUser)
+      return res.status(500).json({ message: "User dose not exits" }); 
 
     const isPasswordCorrect = await bcrypt.compare(
       password,
@@ -27,13 +27,14 @@ export const signin = async (req, res) => {
 
     res.status(200).json({ result: existingUser, token });
   } catch (error) {
+    console.log("error")
     res.status(500).json({ message: error });
   }
 };
 
 export const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
-  console.log(req.body);
+  console.log(email)
   try {
     const existingUser = await User.findOne({ email });
 

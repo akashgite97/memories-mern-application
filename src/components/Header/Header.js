@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import memories from "../../assets/memories.png";
+import memories from "../../assets/memories-logo.png";
 import {
   AppBar,
   Typography,
@@ -57,9 +57,7 @@ const Header = () => {
             sm={4}
           >
             <Typography className={classes.heading} variant="h2" align="left">
-             <Link to="/">
               Memories
-              </Link>
             </Typography>
             <img
               className={classes.image}

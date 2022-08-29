@@ -6,7 +6,7 @@ import {
   Container,
   Avatar,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "./styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,10 +33,7 @@ const Auth = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {t} = useTranslation()
-  const auth = useSelector(state => state.auth)
-  
-
-  console.log("auth",auth)
+  const {isAuthenticated} = useSelector(state => state.auth)
 
   const switchAuthMode = () => {
     setSignup((prevIsSignup) => !prevIsSignup);
@@ -49,13 +46,17 @@ const Auth = () => {
   const handleSubmit = (e)=>{
     e.preventDefault()
     if(isSignUp){
-     dispatch(signup(data))
+      dispatch(signup(data))
     }else{
-     dispatch(signin(data)).then(()=>{
-      navigate('/')
-     })
+      dispatch(signin(data))
     }
   }
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      navigate('/')
+    }
+  },[isAuthenticated])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -126,7 +127,7 @@ const Auth = () => {
           >
             {isSignUp ? t(authTile.signup) : t(authTile.signin)}
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="center">
             <Grid item>
               <Button onClick={switchAuthMode}>
                 {isSignUp

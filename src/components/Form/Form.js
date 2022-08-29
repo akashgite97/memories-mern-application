@@ -27,7 +27,7 @@ const PostForm = () => {
   const { post } = useSelector((state) => state.posts);
   const navigate = useNavigate();
   const { t } = useTranslation(["common"]);
-  const {isAuthenticated} = useSelector(state => state.auth)
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -149,10 +149,11 @@ const PostForm = () => {
           </form>
         </Paper>
       ) : (
-        <Typography varint="h4" style={{ margin: "10px 0px" }}>
-          Please sign in to create your own memory
-          <br /> and like other's memories
-        </Typography>
+        <Paper className={classes.paper} elevation={4}>
+          <Typography variant="h6" style={{ margin: "10px 0px" }}>
+            Please sign in to create your own memory and like other's memories
+          </Typography>
+        </Paper>
       )}
     </>
   );
